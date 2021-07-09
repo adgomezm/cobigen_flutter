@@ -10,7 +10,11 @@ PageableDto _$PageableDtoFromJson(Map<String, dynamic> json) {
   return PageableDto(
     json['pageSize'] as int,
     json['pageNumber'] as int,
-    json['sort'] as List,
+    (json['sort'] as List)
+        ?.map((e) => e == null
+            ? null
+            : PageableSortDto.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
