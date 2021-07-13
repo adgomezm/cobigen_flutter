@@ -2,6 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_springboot/network/common/pageable_dto.dart';
+import 'package:flutter_springboot/network/common/pageable_sort_dto.dart';
+import 'package:flutter_springboot/network/list/list_content_response_dto.dart';
+import 'package:flutter_springboot/network/list/list_request_dto.dart';
+import 'package:flutter_springboot/network/list/list_response_dto.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_springboot/views/addemployee.dart';
 import 'package:flutter_springboot/views/detailpage.dart';
@@ -14,13 +19,16 @@ class ListEmployees extends StatefulWidget {
 class _ListEmployeesState extends State<ListEmployees> {
   List data;
 
-  Future<List> getData() async {
+  Future<ListResponseDto> getData() async {
+    var sort = PageableSortDto("employeeId", "ASC");
+    var pageable = PageableDto(10, 0, [sort]);
     final response = await http.post(
-        "http://localhost:8081/jumpthequeue/services/rest/visitormanagement/v1/visitor/search",
+        "http://localhost:8081/services/rest/employeemanagement/v1/employee/search",
         headers: {
           "Accept": "application/json",
           "Access-Control_Allow_Origin": "*"
-        });
+        },
+        body: ListRequestDto(null, null, null, null, pageable));
     return json.decode(response.body);
   }
 
@@ -37,7 +45,6 @@ class _ListEmployeesState extends State<ListEmployees> {
 
   @override
   void initState() {
-    super.initState();
     this.getData();
   }
 
@@ -55,7 +62,7 @@ class _ListEmployeesState extends State<ListEmployees> {
           ),
         ],
       ),
-      body: new FutureBuilder<List>(
+      body: new FutureBuilder<ListResponseDto>(
         future: getData(),
         builder: (context, snapshot) {
           if (snapshot.hasError) print(snapshot.error);
@@ -73,13 +80,14 @@ class _ListEmployeesState extends State<ListEmployees> {
 }
 
 class ItemList extends StatelessWidget {
-  final List list;
-  ItemList({this.list});
+  final ListResponseDto list;
+  ListContentResponseDto item;
+  ItemList({this.list, this.item});
 
   @override
   Widget build(BuildContext context) {
     return new ListView.builder(
-      itemCount: list == null ? 0 : list.length,
+      itemCount: list == null ? 0 : list.totalElements,
       itemBuilder: (context, i) {
         return Column(
           children: [
@@ -89,7 +97,7 @@ class ItemList extends StatelessWidget {
                 onTap: () => Navigator.of(context).push(
                   new MaterialPageRoute(
                       builder: (BuildContext context) => new Detail(
-                            list: list,
+                            //list: list,
                             index: i,
                           )),
                 ),
@@ -109,7 +117,7 @@ class ItemList extends StatelessWidget {
                             children: [
                               Container(
                                 child: Text(
-                                  list[i]['name'].toString(),
+                                  item.name.toString(),
                                   style: TextStyle(
                                       fontSize: 20.0, color: Colors.black87),
                                 ),
@@ -123,7 +131,7 @@ class ItemList extends StatelessWidget {
                             children: [
                               Container(
                                 child: Text(
-                                  list[i]['number'].toString(),
+                                  item.email.toString(),
                                   style: TextStyle(
                                       fontSize: 20.0, color: Colors.black87),
                                 ),
