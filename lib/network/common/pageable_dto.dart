@@ -1,8 +1,7 @@
 import 'package:flutter_springboot/network/common/pageable_sort_dto.dart';
-import 'package:json_annotation/json_annotation.dart';
+
 part 'pageable_dto.g.dart';
 
-@JsonSerializable()
 class PageableDto {
   final int pageSize;
   final int pageNumber;

@@ -3,6 +3,7 @@ import 'package:flutter_springboot/model/abstrac_bloc.dart';
 import 'package:flutter_springboot/model/bloc_event.dart';
 import 'package:flutter_springboot/model/bloc_state.dart';
 import 'package:flutter_springboot/model/repository/employee_list_repository.dart';
+import 'package:flutter_springboot/network/list/utils/safeprint.dart';
 
 
 class EmployeeListBloc
@@ -25,14 +26,14 @@ class EmployeeListBloc
           yield LoadingState();
 
           var repository = EmployeeListRepository();
-          var response = await repository.getData(15, 0);
+          var response = await repository.getData(10, 0);
           yield OnSuccessState(OnSuccessState.EMPLOYEE_LIST, response);
         }
       } else {
         yield NoConnectivityState();
       }
-    } catch (_) {
-      print("generic error"); 
+    } catch (e) {
+      safePrint(e);
 
       yield OnErrorState(
           OnErrorState.GENERIC_ERROR_CODE, OnErrorState.GENERIC_ERROR_MESSAGE);

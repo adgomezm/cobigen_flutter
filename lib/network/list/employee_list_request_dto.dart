@@ -1,9 +1,8 @@
 
 import 'package:flutter_springboot/network/common/pageable_dto.dart';
-import 'package:json_annotation/json_annotation.dart';
+
 part 'employee_list_request_dto.g.dart';
 
-@JsonSerializable()
 class EmployeeListRequestDto {
   final String? employeeId;
   final String? name;

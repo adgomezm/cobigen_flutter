@@ -1,7 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
+
 part 'pageable_sort_dto.g.dart';
 
-@JsonSerializable()
 class PageableSortDto {
   final String property;
   final String direction;

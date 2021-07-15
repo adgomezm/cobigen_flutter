@@ -1,7 +1,6 @@
-import 'package:json_annotation/json_annotation.dart';
+
 part 'employee_list_content_response_dto.g.dart';
 
-@JsonSerializable()
 class EmployeeListContentResponseDto {
   final int modificationCounter;
   final int id;

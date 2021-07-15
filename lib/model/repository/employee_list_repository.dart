@@ -15,13 +15,15 @@ class EmployeeListRepository  {
     var sort = PageableSortDto("employeeId", "ASC");
     var pageable = PageableDto(pageSize, pageNumber, [sort]);
     final response = await http.post(
-        url,
+        Uri.parse(url),
+         
         headers: {
           "Accept": "application/json",
           "Access-Control_Allow_Origin": "*"
         },
+         
         body: EmployeeListRequestDto(null, null, null, null, pageable).toJson());
-          print("${response.body}");
+          print("response body ${response.body}");
     return json.decode(response.body);
   }
 
