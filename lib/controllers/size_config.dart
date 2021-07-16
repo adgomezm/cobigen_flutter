@@ -1,6 +1,7 @@
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_springboot/network/list/utils/safeprint.dart';
+import 'package:flutter_springboot/views/ui/utils/safeprint.dart';
+
 
 class SizeConfig {
   static MediaQueryData? _mediaQueryData;

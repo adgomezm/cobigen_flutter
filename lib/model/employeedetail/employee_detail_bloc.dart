@@ -4,7 +4,8 @@ import 'package:flutter_springboot/model/abstrac_bloc.dart';
 import 'package:flutter_springboot/model/bloc_event.dart';
 import 'package:flutter_springboot/model/bloc_state.dart';
 import 'package:flutter_springboot/model/repository/employee_list_repository.dart';
-import 'package:flutter_springboot/network/list/utils/safeprint.dart';
+
+import 'package:flutter_springboot/views/ui/utils/safeprint.dart';
 
 class EmployeeDetailBloc
     extends AbstractBloc<AbstractBlocEvent, AbstractBlocState> {
